@@ -82,14 +82,360 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <grid id="f1249" binding="tasksPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                  <grid id="f1249" binding="tasksPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="3">
                     <constraints/>
                     <properties>
                       <background color="-16777216"/>
                       <foreground color="-16777216"/>
+                      <maximumSize width="280" height="32767"/>
+                      <minimumSize width="280" height="0"/>
+                      <preferredSize width="280" height="280"/>
                     </properties>
                     <border type="none"/>
-                    <children/>
+                    <children>
+                      <component id="bb387" class="javax.swing.JLabel" binding="noCardsLabel">
+                        <constraints/>
+                        <properties>
+                          <enabled value="true"/>
+                          <font name="Roboto Light" size="36" style="0"/>
+                          <foreground color="-1"/>
+                          <horizontalAlignment value="0"/>
+                          <horizontalTextPosition value="0"/>
+                          <text value="Add a Card with the + button"/>
+                          <visible value="false"/>
+                        </properties>
+                      </component>
+                      <splitpane id="1babe" binding="pastDueList">
+                        <constraints/>
+                        <properties>
+                          <background color="-16777216"/>
+                          <dividerLocation value="40"/>
+                          <dividerSize value="5"/>
+                          <doubleBuffered value="false"/>
+                          <lastDividerLocation value="35"/>
+                          <maximumSize width="280" height="535"/>
+                          <minimumSize width="280" height="535"/>
+                          <orientation value="0"/>
+                          <preferredSize width="280" height="535"/>
+                          <visible value="true"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="6adcc" class="javax.swing.JLabel">
+                            <constraints>
+                              <splitpane position="left"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <font name="Roboto Light" size="28" style="0"/>
+                              <foreground color="-1"/>
+                              <horizontalAlignment value="2"/>
+                              <horizontalTextPosition value="2"/>
+                              <maximumSize width="270" height="70"/>
+                              <minimumSize width="270" height="70"/>
+                              <preferredSize width="270" height="70"/>
+                              <text value=" Past Due"/>
+                            </properties>
+                          </component>
+                          <scrollpane id="e05f0">
+                            <constraints>
+                              <splitpane position="right"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <horizontalScrollBarPolicy value="31"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <grid id="14fa2" binding="pastDueCards" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                <margin top="0" left="0" bottom="0" right="0"/>
+                                <constraints/>
+                                <properties>
+                                  <background color="-16777216"/>
+                                </properties>
+                                <border type="none"/>
+                                <children/>
+                              </grid>
+                            </children>
+                          </scrollpane>
+                        </children>
+                      </splitpane>
+                      <splitpane id="7d8fe" binding="thisWeekList">
+                        <constraints/>
+                        <properties>
+                          <background color="-16777216"/>
+                          <dividerLocation value="40"/>
+                          <dividerSize value="5"/>
+                          <doubleBuffered value="false"/>
+                          <lastDividerLocation value="35"/>
+                          <maximumSize width="280" height="535"/>
+                          <minimumSize width="280" height="535"/>
+                          <orientation value="0"/>
+                          <preferredSize width="280" height="535"/>
+                          <visible value="true"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="5c3a9" class="javax.swing.JLabel">
+                            <constraints>
+                              <splitpane position="left"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <font name="Roboto Light" size="28" style="0"/>
+                              <foreground color="-1"/>
+                              <horizontalAlignment value="2"/>
+                              <horizontalTextPosition value="2"/>
+                              <maximumSize width="270" height="70"/>
+                              <minimumSize width="270" height="70"/>
+                              <preferredSize width="270" height="70"/>
+                              <text value=" This Week"/>
+                            </properties>
+                          </component>
+                          <scrollpane id="5e9cc">
+                            <constraints>
+                              <splitpane position="right"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <horizontalScrollBarPolicy value="31"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <grid id="de4c0" binding="thisWeekCards" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                <margin top="0" left="0" bottom="0" right="0"/>
+                                <constraints/>
+                                <properties>
+                                  <background color="-16777216"/>
+                                </properties>
+                                <border type="none"/>
+                                <children/>
+                              </grid>
+                            </children>
+                          </scrollpane>
+                        </children>
+                      </splitpane>
+                      <splitpane id="aa5a6" binding="nextWeekList">
+                        <constraints/>
+                        <properties>
+                          <background color="-16777216"/>
+                          <dividerLocation value="40"/>
+                          <dividerSize value="5"/>
+                          <doubleBuffered value="false"/>
+                          <lastDividerLocation value="35"/>
+                          <maximumSize width="280" height="535"/>
+                          <minimumSize width="280" height="535"/>
+                          <orientation value="0"/>
+                          <preferredSize width="280" height="535"/>
+                          <visible value="true"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="f528c" class="javax.swing.JLabel">
+                            <constraints>
+                              <splitpane position="left"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <font name="Roboto Light" size="28" style="0"/>
+                              <foreground color="-1"/>
+                              <horizontalAlignment value="2"/>
+                              <horizontalTextPosition value="2"/>
+                              <maximumSize width="270" height="70"/>
+                              <minimumSize width="270" height="70"/>
+                              <preferredSize width="270" height="70"/>
+                              <text value=" Next Week"/>
+                            </properties>
+                          </component>
+                          <scrollpane id="8e137">
+                            <constraints>
+                              <splitpane position="right"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <horizontalScrollBarPolicy value="31"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <grid id="1b625" binding="nextWeekCards" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                <margin top="0" left="0" bottom="0" right="0"/>
+                                <constraints/>
+                                <properties>
+                                  <background color="-16777216"/>
+                                </properties>
+                                <border type="none"/>
+                                <children/>
+                              </grid>
+                            </children>
+                          </scrollpane>
+                        </children>
+                      </splitpane>
+                      <splitpane id="5f97b" binding="laterList">
+                        <constraints/>
+                        <properties>
+                          <background color="-16777216"/>
+                          <dividerLocation value="40"/>
+                          <dividerSize value="5"/>
+                          <doubleBuffered value="false"/>
+                          <lastDividerLocation value="35"/>
+                          <maximumSize width="280" height="535"/>
+                          <minimumSize width="280" height="535"/>
+                          <orientation value="0"/>
+                          <preferredSize width="280" height="535"/>
+                          <visible value="true"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="dec02" class="javax.swing.JLabel">
+                            <constraints>
+                              <splitpane position="left"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <font name="Roboto Light" size="28" style="0"/>
+                              <foreground color="-1"/>
+                              <horizontalAlignment value="2"/>
+                              <horizontalTextPosition value="2"/>
+                              <maximumSize width="270" height="70"/>
+                              <minimumSize width="270" height="70"/>
+                              <preferredSize width="270" height="70"/>
+                              <text value=" Later"/>
+                            </properties>
+                          </component>
+                          <scrollpane id="4ba0f">
+                            <constraints>
+                              <splitpane position="right"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <horizontalScrollBarPolicy value="31"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <grid id="b00b5" binding="laterCards" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                <margin top="0" left="0" bottom="0" right="0"/>
+                                <constraints/>
+                                <properties>
+                                  <background color="-16777216"/>
+                                </properties>
+                                <border type="none"/>
+                                <children/>
+                              </grid>
+                            </children>
+                          </scrollpane>
+                        </children>
+                      </splitpane>
+                      <splitpane id="96a99" binding="noDueDateList">
+                        <constraints/>
+                        <properties>
+                          <background color="-16777216"/>
+                          <dividerLocation value="40"/>
+                          <dividerSize value="5"/>
+                          <doubleBuffered value="false"/>
+                          <lastDividerLocation value="35"/>
+                          <maximumSize width="280" height="535"/>
+                          <minimumSize width="280" height="535"/>
+                          <orientation value="0"/>
+                          <preferredSize width="280" height="535"/>
+                          <visible value="true"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="9d87" class="javax.swing.JLabel">
+                            <constraints>
+                              <splitpane position="left"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <font name="Roboto Light" size="28" style="0"/>
+                              <foreground color="-1"/>
+                              <horizontalAlignment value="2"/>
+                              <horizontalTextPosition value="2"/>
+                              <maximumSize width="270" height="70"/>
+                              <minimumSize width="270" height="70"/>
+                              <preferredSize width="270" height="70"/>
+                              <text value=" No Due Date"/>
+                            </properties>
+                          </component>
+                          <scrollpane id="13b16">
+                            <constraints>
+                              <splitpane position="right"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <horizontalScrollBarPolicy value="31"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <grid id="5d71f" binding="noDueDateCards" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                <margin top="0" left="0" bottom="0" right="0"/>
+                                <constraints/>
+                                <properties>
+                                  <background color="-16777216"/>
+                                </properties>
+                                <border type="none"/>
+                                <children/>
+                              </grid>
+                            </children>
+                          </scrollpane>
+                        </children>
+                      </splitpane>
+                      <splitpane id="34d80" binding="doneList">
+                        <constraints/>
+                        <properties>
+                          <background color="-16777216"/>
+                          <dividerLocation value="40"/>
+                          <dividerSize value="5"/>
+                          <doubleBuffered value="false"/>
+                          <lastDividerLocation value="35"/>
+                          <maximumSize width="280" height="535"/>
+                          <minimumSize width="280" height="535"/>
+                          <orientation value="0"/>
+                          <preferredSize width="280" height="535"/>
+                          <visible value="true"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="47170" class="javax.swing.JLabel">
+                            <constraints>
+                              <splitpane position="left"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <font name="Roboto Light" size="28" style="0"/>
+                              <foreground color="-1"/>
+                              <horizontalAlignment value="2"/>
+                              <horizontalTextPosition value="2"/>
+                              <maximumSize width="270" height="70"/>
+                              <minimumSize width="270" height="70"/>
+                              <preferredSize width="270" height="70"/>
+                              <text value=" Done"/>
+                            </properties>
+                          </component>
+                          <scrollpane id="4e823">
+                            <constraints>
+                              <splitpane position="right"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <horizontalScrollBarPolicy value="31"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <grid id="41df8" binding="doneCards" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                <margin top="0" left="0" bottom="0" right="0"/>
+                                <constraints/>
+                                <properties>
+                                  <background color="-16777216"/>
+                                </properties>
+                                <border type="none"/>
+                                <children/>
+                              </grid>
+                            </children>
+                          </scrollpane>
+                        </children>
+                      </splitpane>
+                    </children>
                   </grid>
                 </children>
               </scrollpane>
@@ -136,7 +482,7 @@
                   </component>
                 </children>
               </grid>
-              <grid id="55332" binding="actionPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="55332" binding="actionPanel" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <splitpane position="right"/>
@@ -150,7 +496,7 @@
                 <children>
                   <component id="e4756" class="javax.swing.JButton" binding="tasksButton">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <minimum-size width="250" height="50"/>
                         <preferred-size width="250" height="50"/>
                         <maximum-size width="250" height="50"/>
@@ -168,7 +514,7 @@
                   </component>
                   <component id="636ff" class="javax.swing.JButton" binding="Button2">
                     <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <minimum-size width="250" height="50"/>
                         <preferred-size width="250" height="50"/>
                         <maximum-size width="250" height="50"/>
@@ -186,7 +532,7 @@
                   </component>
                   <component id="67a24" class="javax.swing.JButton" binding="Button3">
                     <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <minimum-size width="250" height="50"/>
                         <preferred-size width="250" height="50"/>
                         <maximum-size width="250" height="50"/>
@@ -204,7 +550,7 @@
                   </component>
                   <component id="3a877" class="javax.swing.JButton" binding="QuitButton">
                     <constraints>
-                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <minimum-size width="250" height="50"/>
                         <preferred-size width="250" height="50"/>
                         <maximum-size width="250" height="50"/>
@@ -218,6 +564,24 @@
                       <foreground color="-1"/>
                       <horizontalTextPosition value="0"/>
                       <text value="Quit"/>
+                    </properties>
+                  </component>
+                  <component id="c314a" class="javax.swing.JButton" binding="addButton">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <minimum-size width="250" height="50"/>
+                        <preferred-size width="250" height="50"/>
+                        <maximum-size width="250" height="50"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <borderPainted value="false"/>
+                      <contentAreaFilled value="false"/>
+                      <focusPainted value="false"/>
+                      <font name="Roboto Light" size="28" style="0"/>
+                      <foreground color="-1"/>
+                      <horizontalTextPosition value="0"/>
+                      <text value="+"/>
                     </properties>
                   </component>
                 </children>

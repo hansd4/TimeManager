@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="391" height="169"/>
+      <xy x="20" y="20" width="256" height="76"/>
     </constraints>
     <properties>
       <maximumSize width="256" height="76"/>
@@ -34,7 +34,7 @@
             <properties>
               <background color="-16777216"/>
               <continuousLayout value="false"/>
-              <dividerLocation value="40"/>
+              <dividerLocation value="36"/>
               <dividerSize value="0"/>
               <doubleBuffered value="false"/>
               <foreground color="-1"/>
@@ -69,7 +69,7 @@
                   <splitpane position="right"/>
                 </constraints>
                 <properties>
-                  <dividerLocation value="24"/>
+                  <dividerLocation value="26"/>
                   <dividerSize value="0"/>
                   <orientation value="0"/>
                 </properties>
@@ -81,7 +81,7 @@
                     </constraints>
                     <properties>
                       <background color="-16777216"/>
-                      <dividerLocation value="12"/>
+                      <dividerLocation value="13"/>
                       <dividerSize value="0"/>
                       <orientation value="0"/>
                     </properties>
@@ -165,16 +165,46 @@
                       </splitpane>
                     </children>
                   </splitpane>
-                  <grid id="ee675" binding="cardLabelPane" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                  <splitpane id="64a52" binding="labelSplitPane">
                     <constraints>
                       <splitpane position="right"/>
                     </constraints>
                     <properties>
                       <background color="-16777216"/>
+                      <dividerLocation value="200"/>
+                      <dividerSize value="0"/>
                     </properties>
                     <border type="none"/>
-                    <children/>
-                  </grid>
+                    <children>
+                      <grid id="e9531" binding="cardCategoryPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                        <constraints>
+                          <splitpane position="left"/>
+                        </constraints>
+                        <properties>
+                          <background color="-16777216"/>
+                        </properties>
+                        <border type="none"/>
+                        <children/>
+                      </grid>
+                      <component id="3a865" class="javax.swing.JButton" binding="expandButton">
+                        <constraints>
+                          <splitpane position="right"/>
+                        </constraints>
+                        <properties>
+                          <background color="-16777216"/>
+                          <borderPainted value="false"/>
+                          <contentAreaFilled value="false"/>
+                          <focusPainted value="false"/>
+                          <font name="Roboto" size="10" style="0"/>
+                          <foreground color="-1"/>
+                          <horizontalTextPosition value="0"/>
+                          <text value="v"/>
+                          <verticalAlignment value="0"/>
+                          <verticalTextPosition value="0"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </splitpane>
                 </children>
               </splitpane>
             </children>
