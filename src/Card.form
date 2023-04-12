@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Card">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="391" height="169"/>
+    </constraints>
+    <properties>
+      <maximumSize width="256" height="76"/>
+      <minimumSize width="256" height="76"/>
+      <preferredSize width="256" height="76"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <splitpane id="4a6bd" binding="prioritySplitPane">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="256" height="76"/>
+            <preferred-size width="256" height="76"/>
+            <maximum-size width="256" height="76"/>
+          </grid>
+        </constraints>
+        <properties>
+          <dividerLocation value="10"/>
+          <dividerSize value="0"/>
+          <orientation value="1"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <splitpane id="8e47c">
+            <constraints>
+              <splitpane position="right"/>
+            </constraints>
+            <properties>
+              <background color="-16777216"/>
+              <continuousLayout value="false"/>
+              <dividerLocation value="40"/>
+              <dividerSize value="0"/>
+              <doubleBuffered value="false"/>
+              <foreground color="-1"/>
+              <orientation value="0"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="be9" class="javax.swing.JButton" binding="mainButton">
+                <constraints>
+                  <splitpane position="left"/>
+                </constraints>
+                <properties>
+                  <autoscrolls value="false"/>
+                  <background color="-16777216"/>
+                  <borderPainted value="false"/>
+                  <contentAreaFilled value="false"/>
+                  <defaultCapable value="true"/>
+                  <doubleBuffered value="false"/>
+                  <focusPainted value="false"/>
+                  <font name="Roboto" size="28" style="0"/>
+                  <foreground color="-1"/>
+                  <horizontalAlignment value="2"/>
+                  <horizontalTextPosition value="2"/>
+                  <iconTextGap value="0"/>
+                  <text value="Card Title"/>
+                  <verticalAlignment value="0"/>
+                  <verticalTextPosition value="0"/>
+                </properties>
+              </component>
+              <splitpane id="32a3e" binding="labelProgressSplitPane">
+                <constraints>
+                  <splitpane position="right"/>
+                </constraints>
+                <properties>
+                  <dividerLocation value="24"/>
+                  <dividerSize value="0"/>
+                  <orientation value="0"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <splitpane id="a8a18" binding="progressSplitPane">
+                    <constraints>
+                      <splitpane position="left"/>
+                    </constraints>
+                    <properties>
+                      <background color="-16777216"/>
+                      <dividerLocation value="12"/>
+                      <dividerSize value="0"/>
+                      <orientation value="0"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <splitpane id="29c1c" binding="deadlineSplitPane">
+                        <constraints>
+                          <splitpane position="left"/>
+                        </constraints>
+                        <properties>
+                          <background color="-16777216"/>
+                          <dividerLocation value="125"/>
+                          <dividerSize value="0"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="c0af3" class="javax.swing.JLabel" binding="deadlineLabel">
+                            <constraints>
+                              <splitpane position="left"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <font name="Roboto" size="10" style="0"/>
+                              <foreground color="-1"/>
+                              <horizontalTextPosition value="10"/>
+                              <text value="MM/DD @ HH:MM PM"/>
+                            </properties>
+                          </component>
+                          <component id="7197a" class="javax.swing.JProgressBar" binding="deadlineBar">
+                            <constraints>
+                              <splitpane position="right"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <borderPainted value="false"/>
+                              <foreground color="-65536"/>
+                              <indeterminate value="false"/>
+                              <string value="100%"/>
+                              <stringPainted value="false"/>
+                              <value value="20"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </splitpane>
+                      <splitpane id="b99" binding="doneSplitPane">
+                        <constraints>
+                          <splitpane position="right"/>
+                        </constraints>
+                        <properties>
+                          <background color="-16777216"/>
+                          <dividerLocation value="125"/>
+                          <dividerSize value="0"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="a7d71" class="javax.swing.JLabel" binding="progressLabel">
+                            <constraints>
+                              <splitpane position="left"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <font name="Roboto" size="10" style="0"/>
+                              <foreground color="-1"/>
+                              <horizontalTextPosition value="10"/>
+                              <text value="XX%"/>
+                            </properties>
+                          </component>
+                          <component id="5163f" class="javax.swing.JProgressBar" binding="progressBar">
+                            <constraints>
+                              <splitpane position="right"/>
+                            </constraints>
+                            <properties>
+                              <background color="-16777216"/>
+                              <borderPainted value="false"/>
+                              <foreground color="-65536"/>
+                              <string value="100%"/>
+                              <value value="50"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </splitpane>
+                    </children>
+                  </splitpane>
+                  <grid id="ee675" binding="cardLabelPane" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                    <constraints>
+                      <splitpane position="right"/>
+                    </constraints>
+                    <properties>
+                      <background color="-16777216"/>
+                    </properties>
+                    <border type="none"/>
+                    <children/>
+                  </grid>
+                </children>
+              </splitpane>
+            </children>
+          </splitpane>
+          <grid id="b77be" binding="priorityLabelPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <splitpane position="left"/>
+            </constraints>
+            <properties>
+              <background color="-65536"/>
+              <maximumSize width="10" height="10"/>
+              <minimumSize width="10" height="10"/>
+              <preferredSize width="10" height="10"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+        </children>
+      </splitpane>
+    </children>
+  </grid>
+</form>
