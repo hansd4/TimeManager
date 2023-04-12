@@ -20,6 +20,7 @@ public class MainFrame extends JFrame {
     private JSplitPane leftSplitPane;
     private JSplitPane mainSplitPane;
     private JPanel tasksPanel;
+    private JScrollPane tasksScrollPane;
 
     public MainFrame() {
         // set up MainFrame
@@ -30,6 +31,7 @@ public class MainFrame extends JFrame {
         this.pack();
 
         // set up components
+        tasksScrollPane.setHorizontalScrollBar(new ScrollBar());
 
         // listeners
         // button listeners
