@@ -18,12 +18,22 @@ public class TimeManager {
         cardLists[5] = new CardList("Done");
         labels = new ArrayList<>();
         view = new MainFrame(this);
+
+        try {
+            Thread.sleep(60000);
+            update();
+        } catch (Exception ignored) {
+
+        }
     }
 
     public void newCard() {
         Card newCard = new Card();
         CardEditor editor = new CardEditor(newCard, this);
         cardLists[0].getCards().add(newCard);
+    }
+
+    public void update() {
         view.displayCardLists();
     }
 

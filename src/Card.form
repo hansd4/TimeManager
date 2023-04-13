@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="256" height="76"/>
+      <xy x="20" y="20" width="280" height="76"/>
     </constraints>
     <properties>
       <maximumSize width="256" height="76"/>
@@ -198,7 +198,7 @@
                           <font name="Roboto" size="10" style="0"/>
                           <foreground color="-1"/>
                           <horizontalTextPosition value="0"/>
-                          <text value="v"/>
+                          <text value="^"/>
                           <verticalAlignment value="0"/>
                           <verticalTextPosition value="0"/>
                         </properties>

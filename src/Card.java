@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,6 +36,9 @@ public class Card extends JPanel {
     private Card parentCard;
     private boolean expanded;
 
+    // misc
+    private SimpleDateFormat f;
+
     public Card(Priority priority,
                 String title,
                 String description,
@@ -56,7 +60,9 @@ public class Card extends JPanel {
         this.parentCard = null;
         this.expanded = false;
 
-        // TODO: init card GUI with data
+        this.f = new SimpleDateFormat("M/d @ h:mm a");
+
+        loadGUI();
 
         this.setVisible(true);
     }
@@ -83,7 +89,9 @@ public class Card extends JPanel {
         this.parentCard = parentCard;
         this.expanded = false;
 
-        // TODO: init card GUI with data
+        this.f = new SimpleDateFormat("M/d @ h:mm a");
+
+        loadGUI();
 
         this.setVisible(true);
     }
@@ -103,7 +111,9 @@ public class Card extends JPanel {
         this.parentCard = null;
         this.expanded = false;
 
-        // TODO: init card GUI with data
+        this.f = new SimpleDateFormat("M/d @ h:mm a");
+
+        loadGUI();
 
         this.setVisible(true);
     }
@@ -185,10 +195,15 @@ public class Card extends JPanel {
 
     public void setPriority(Priority newPriority) {
         priority = newPriority;
+        Color c = Priority.priorityToColor(priority);
+        priorityLabelPanel.setBackground(c);
+        deadlineBar.setForeground(c);
+        progressBar.setForeground(c);
     }
 
     public void setTitle(String newTitle) {
         title = newTitle;
+        mainButton.setText(title);
     }
 
     public void setDescrption(String newDescription) {
@@ -201,10 +216,13 @@ public class Card extends JPanel {
 
     public void setDeadline(Date newDeadline) {
         deadline = newDeadline;
+        deadlineLabel.setText(f.format(deadline));
+        updateProgressBars();
     }
 
     public void setProgress(int newProgress) {
         progress = newProgress;
+        progressLabel.setText(progress + "%");
     }
 
     public void setSubCards(ArrayList<Card> newSubCards) {
@@ -227,10 +245,12 @@ public class Card extends JPanel {
 
     public void addLabel(CardLabel l) {
         labels.add(l);
+        cardCategoryPanel.add(l);
     }
 
     public void removeLabel(CardLabel l) {
         labels.remove(l);
+        cardCategoryPanel.remove(l);
     }
 
     public void setParentCard(Card newParentCard) {
@@ -239,6 +259,15 @@ public class Card extends JPanel {
 
     public void setExpanded(boolean newExpanded) {
         expanded = newExpanded;
+    }
+
+    public void loadGUI() {
+        mainButton.setText(title);
+        updateProgressBars();
+    }
+
+    public void updateProgressBars() {
+        // TODO
     }
 
     @Override

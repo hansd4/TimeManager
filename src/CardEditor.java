@@ -6,6 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CardEditor extends JFrame implements ActionListener {
     // UI Components
@@ -79,6 +80,7 @@ public class CardEditor extends JFrame implements ActionListener {
             @Override
             public void windowClosing(WindowEvent e) {
                 updateCard();
+                controller.update();
                 dispose();
             }
         });
@@ -92,15 +94,20 @@ public class CardEditor extends JFrame implements ActionListener {
         descriptionTextArea.setText(card.getDescription());
         priorityBox.setSelectedItem(card.getPriority());
 
+        String[] deadlineFields;
         if (card.getDeadline() != null) {
-            String[] deadlineFields = f.format(card.getDeadline()).split(" ");
-            monthField.setText(deadlineFields[0]);
-            dayField.setText(deadlineFields[1]);
-            yearField.setText(deadlineFields[2]);
-            hourField.setText(deadlineFields[3]);
-            minuteField.setText(deadlineFields[4]);
-            AMPMBox.setSelectedItem(deadlineFields[5]);
+            deadlineFields = f.format(card.getDeadline()).split(" ");
+        } else { // default to a week from today
+            Calendar oneWeekFromNow = Calendar.getInstance();
+            oneWeekFromNow.add(Calendar.WEEK_OF_MONTH, 1);
+            deadlineFields = f.format(oneWeekFromNow.getTime()).split(" ");
         }
+        monthField.setText(deadlineFields[0]);
+        dayField.setText(deadlineFields[1]);
+        yearField.setText(deadlineFields[2]);
+        hourField.setText(deadlineFields[3]);
+        minuteField.setText(deadlineFields[4]);
+        AMPMBox.setSelectedItem(deadlineFields[5]);
 
         progressSlider.setValue(card.getProgress());
         parentCardBox.setSelectedItem(card.getParentCard());
@@ -141,6 +148,7 @@ public class CardEditor extends JFrame implements ActionListener {
         }
         mainPanel.revalidate();
         mainPanel.repaint();
+        controller.update();
     }
 
     public void updateCard() {

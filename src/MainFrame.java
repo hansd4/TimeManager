@@ -37,7 +37,7 @@ public class MainFrame extends JFrame {
     private JPanel noDueDateCards;
     private JSplitPane doneList;
     private JPanel doneCards;
-    private JSplitPane[] cardLists;
+    private JPanel[] cardLists;
 
     private TimeManager controller;
 
@@ -51,18 +51,18 @@ public class MainFrame extends JFrame {
 
         // initialize fields
         this.controller = controller;
-        cardLists = new JSplitPane[6];
-        cardLists[0] = pastDueList;
-        cardLists[1] = thisWeekList;
-        cardLists[2] = nextWeekList;
-        cardLists[3] = laterList;
-        cardLists[4] = noDueDateList;
-        cardLists[5] = doneList;
+        cardLists = new JPanel[6];
+        cardLists[0] = pastDueCards;
+        cardLists[1] = thisWeekCards;
+        cardLists[2] = nextWeekCards;
+        cardLists[3] = laterCards;
+        cardLists[4] = noDueDateCards;
+        cardLists[5] = doneCards;
 
         // set up components
         tasksScrollPane.setHorizontalScrollBar(new ScrollBar());
-        for (JSplitPane c : cardLists) {
-            c.setVisible(false);
+        for (JPanel c : cardLists) {
+            ((JScrollPane) c.getParent().getParent()).setVerticalScrollBar(new ScrollBar());
         }
         displayCardLists();
 
@@ -99,11 +99,6 @@ public class MainFrame extends JFrame {
             textArea1.setText(file.getTextAreaText());
         }
 
-        // TESTING
-//        for (int i = 0; i < 100; i++) {
-//            tasksPanel.add(new Card().getMainPanel());
-//        }
-
         // start program
         this.setVisible(true);
     }
@@ -121,17 +116,25 @@ public class MainFrame extends JFrame {
     }
 
     public void displayCardLists() {
+        for (JPanel c : cardLists) {
+            c.getParent().getParent().getParent().setVisible(false);
+        }
         CardList[] list = controller.getCardLists();
         // if no cards, display no cards warning (how to add them)
         noCardsLabel.setVisible(true);
         for (int i = 0; i < list.length; i++) {
             CardList c = list[i];
+            System.out.println(c.getCards());
             if (c.getCards().size() > 0) { // only display card lists with more than one card inside
                 noCardsLabel.setVisible(false);
-                JSplitPane listGUI = cardLists[i];
-                listGUI.setVisible(true);
+                JPanel listGUI = cardLists[i];
+                System.out.println("Successfully located listGUI at " + listGUI);
+                System.out.println("C is null? " + (c == null));
+                listGUI.getParent().getParent().getParent().setVisible(true);
                 for (Card card : c.getCards()) {
-                    listGUI.add(card);
+                    System.out.println("Card " + card);
+                    System.out.println("Card is null? " + (card == null));
+                    listGUI.add(card.getMainPanel());
                 }
             }
         }
