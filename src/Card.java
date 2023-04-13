@@ -119,7 +119,7 @@ public class Card extends JPanel {
         this.subCards = new ArrayList<>();
         this.labels = new ArrayList<>();
         this.parentCard = null;
-        this.expanded = false;
+        this.expanded = true;
 
         this.f = new SimpleDateFormat("M/d @ h:mm a");
         this.controller = controller;
@@ -251,12 +251,14 @@ public class Card extends JPanel {
         if (!subCards.contains(subCard)) {
             subCard.setParentCard(this);
             subCards.add(subCard);
+            updateExpand();
         }
     }
 
     public void removeSubCard(Card subCard) {
         subCard.setParentCard(null);
         subCards.remove(subCard);
+        updateExpand();
     }
 
     public void setLabels(ArrayList<CardLabel> newLabels) {
@@ -289,6 +291,7 @@ public class Card extends JPanel {
         }
         progressLabel.setText(progress + "%");
         updateProgressBar();
+        updateExpand();
     }
 
     public void addListeners() {
@@ -297,18 +300,22 @@ public class Card extends JPanel {
         });
         expandButton.addActionListener(e -> {
             expanded = !expanded;
-            if (expanded) {
-                expandButton.setText("v");
-                for (Card sub : subCards) {
-                    sub.setVisible(true);
-                }
-            } else {
-                expandButton.setText("^");
-                for (Card sub : subCards) {
-                    sub.setVisible(false);
-                }
-            }
+            updateExpand();
         });
+    }
+
+    public void updateExpand() {
+        if (expanded) {
+            expandButton.setText("v");
+            for (Card sub : getAllSubCards()) {
+                sub.getMainPanel().setVisible(true);
+            }
+        } else {
+            expandButton.setText("^");
+            for (Card sub : getAllSubCards()) {
+                sub.getMainPanel().setVisible(false);
+            }
+        }
     }
 
     public void updateDeadlineBar() {
