@@ -202,6 +202,7 @@ public class Card extends JPanel {
             result.add(parentCard);
             result.addAll(parentCard.getAllParentCards());
         }
+        System.out.println("For card " + this + ", returning that parent cards are: " + result);
         return result;
     }
 
@@ -247,8 +248,10 @@ public class Card extends JPanel {
     }
 
     public void addSubCard(Card subCard) {
-        subCard.setParentCard(this);
-        subCards.add(subCard);
+        if (!subCards.contains(subCard)) {
+            subCard.setParentCard(this);
+            subCards.add(subCard);
+        }
     }
 
     public void removeSubCard(Card subCard) {

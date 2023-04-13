@@ -53,7 +53,7 @@ public class TimeManager {
             System.out.println("Going through card list " + list);
             for (Card c : list.getCards()) {
                 System.out.println("Going through card " + c);
-                if (!card.equals(c)) {
+                if (!card.equals(c) && !result.contains(c)) {
                     result.addAll(c.getAllSubCards(card));
                     if (c.getParentCard() == null || !c.getParentCard().equals(card)) {
                         result.add(c);
@@ -71,15 +71,30 @@ public class TimeManager {
     }
 
     public ArrayList<Card> getCardsBesidesParent(Card card) {
+        System.out.println("Starting");
         ArrayList<Card> result = new ArrayList<>();
         ArrayList<Card> cardsToAvoid = card.getAllParentCards();
         for (CardList list : cardLists) {
             for (Card c : list.getCards()) {
                 if (!cardsToAvoid.contains(c)) {
                     result.addAll(c.getAllSubCards());
+                    result.add(c);
+                    System.out.println("Adding ");
                 }
             }
         }
+        // remove duplicates
+        for (int i = 0; i < result.size() - 1; i++) {
+            Card c = result.get(i);
+            for (int j = i + 1; j < result.size(); j++) {
+                Card otherCard = result.get(j);
+                if (c.equals(otherCard)) {
+                    result.remove(j);
+                    j--;
+                }
+            }
+        }
+        System.out.println("For card " + card + ", returning: " + result);
         return result;
     }
 

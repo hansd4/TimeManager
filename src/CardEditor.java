@@ -152,14 +152,16 @@ public class CardEditor extends JFrame implements ActionListener {
             }
         }
         for (Card c : controller.getCardsBesidesParent(card)) {
-            JCheckBox subCardBox = new JCheckBox();
-            subCardBox.setText(c.getTitle());
-            subCardBox.addActionListener(this);
-            subCardBox.setSelected(card.getSubCards().contains(c));
-            subCardBox.setVisible(true);
-            potentialSubCards.add(c);
-            subCardBoxes.add(subCardBox);
-            subCardsPanel.add(subCardBox);
+            if (!c.equals(card)) {
+                JCheckBox subCardBox = new JCheckBox();
+                subCardBox.setText(c.getTitle());
+                subCardBox.addActionListener(this);
+                subCardBox.setSelected(card.getSubCards().contains(c));
+                subCardBox.setVisible(true);
+                potentialSubCards.add(c);
+                subCardBoxes.add(subCardBox);
+                subCardsPanel.add(subCardBox);
+            }
         }
         potentialLabels.clear();
         labelBoxes.clear();
@@ -200,7 +202,7 @@ public class CardEditor extends JFrame implements ActionListener {
 
         card.setProgress(progressSlider.getValue());
         if (parentCardBox.getSelectedItem() != null && !((Card) parentCardBox.getSelectedItem()).getTitle().equals("None")) {
-            card.setParentCard((Card) parentCardBox.getSelectedItem());
+            ((Card) parentCardBox.getSelectedItem()).addSubCard(card);
         }
 
         mainPanel.revalidate();
