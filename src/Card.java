@@ -251,9 +251,15 @@ public class Card extends JPanel {
     }
 
     public void setDeadline(Date newDeadline) {
-        deadline = newDeadline;
-        deadlineLabel.setText(f.format(deadline));
-        updateDeadlineBar();
+        if (newDeadline == null) {
+            deadline = null;
+            deadlineLabel.setText("");
+            deadlineBar.setValue(0);
+        } else {
+            deadline = newDeadline;
+            deadlineLabel.setText(f.format(deadline));
+            updateDeadlineBar();
+        }
     }
 
     public void setProgress(int newProgress) {
@@ -290,8 +296,18 @@ public class Card extends JPanel {
     }
 
     public void removeLabel(CardLabel l) {
-        labels.remove(l);
-        labelPanel.remove(l);
+        for (CardLabel label : labels) {
+            if (label.equals(l)) {
+                labels.remove(label);
+                break;
+            }
+        }
+        for (Component comp : labelPanel.getComponents()) {
+            if (comp instanceof CardLabel && comp.equals(l)) {
+                labelPanel.remove(comp);
+                break;
+            }
+        }
     }
 
     public void setParentCard(Card newParentCard) {

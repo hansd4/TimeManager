@@ -117,18 +117,55 @@ public class CardEditor extends JFrame implements ActionListener {
                 c.getActionMap().put("delete", d);
             }
         }
+        // listens for TAB key press (move to next component)
+        class MoveAction extends AbstractAction {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == mainPanel) {
+                    titleTextField.requestFocusInWindow();
+                } else { // component in mainpanel, cycle through
+                    Component[] components = mainPanel.getComponents();
+                    boolean found = false;
+                    for (int i = 0; i < components.length - 1; i++) {
+                        if (components[i].equals(e.getSource())) {
+                            components[i + 1].requestFocusInWindow();
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) { // last component, cycle back to first
+                        titleTextField.requestFocusInWindow();
+                    }
+                }
+                mainPanel.requestFocusInWindow();
+            }
+        }
+        MoveAction m = new MoveAction();
+        mainPanel.getInputMap().put(KeyStroke.getKeyStroke("control TAB"), "move");
+        mainPanel.getActionMap().put("move", m);
+        for (Component comp : mainPanel.getComponents()) {
+            JComponent c = (JComponent) comp;
+            c.getInputMap().put(KeyStroke.getKeyStroke("control TAB"), "move");
+            c.getActionMap().put("move", m);
+        }
         // addcard and addlabel action listeners
         addSubCardsButton.addActionListener(e -> {
             controller.newCard(card);
         });
         addLabelButton.addActionListener(e -> {
-            CardLabel c = new CardLabel();
-            CardLabelEditor editor = new CardLabelEditor(c, this);
-            card.addLabel(controller.addLabel(c));
+            CardLabel c = new CardLabel(this);
         });
 
         updateGUI();
         this.setVisible(true);
+    }
+
+    public void labelEditorFinish(CardLabel c) {
+        card.addLabel(controller.addLabel(c));
+    }
+
+    public TimeManager getController() {
+        return controller;
     }
 
     public void quit() {
@@ -137,13 +174,16 @@ public class CardEditor extends JFrame implements ActionListener {
             controller.update();
             dispose();
         } catch (ParseException ex) {
-            JFrame warningWindow = new JFrame();
-            JLabel warning = new JLabel();
-            warning.setText("Invalid date!");
-            warningWindow.add(warning);
-            warningWindow.setLocation(MouseInfo.getPointerInfo().getLocation());
-            warningWindow.pack();
-            warningWindow.setVisible(true);
+//            JFrame warningWindow = new JFrame();
+//            JLabel warning = new JLabel();
+//            warning.setText("Invalid date!");
+//            warningWindow.add(warning);
+//            warningWindow.setLocation(MouseInfo.getPointerInfo().getLocation());
+//            warningWindow.pack();
+//            warningWindow.setVisible(true);
+            updateCard(true);
+            controller.update();
+            dispose();
         }
     }
 
@@ -189,26 +229,7 @@ public class CardEditor extends JFrame implements ActionListener {
                 subCardsPanel.add(subCardBox);
             }
         }
-        potentialLabels.clear();
-        labelBoxes.clear();
-        for (Component comp : labelPanel.getComponents()) {
-            if (comp instanceof JCheckBox) {
-                labelPanel.remove(comp);
-            }
-        }
-        for (CardLabel l : controller.getLabels()) {
-            JCheckBox labelBox = new JCheckBox();
-            labelBox.setPreferredSize(new Dimension(475, 30));
-            labelBox.setText(l.getText());
-            labelBox.setBackground(l.getBackground());
-            labelBox.setForeground(Color.BLACK);
-            labelBox.addActionListener(this);
-            labelBox.setSelected(card.getLabels().contains(l));
-            labelBox.setVisible(true);
-            potentialLabels.add(l);
-            labelBoxes.add(labelBox);
-            labelPanel.add(labelBox);
-        }
+        updateLabels();
         mainPanel.revalidate();
         mainPanel.repaint();
         controller.update();
@@ -235,6 +256,54 @@ public class CardEditor extends JFrame implements ActionListener {
 
         mainPanel.revalidate();
         mainPanel.repaint();
+    }
+
+    public void updateCard(boolean noDeadline) {
+        if (noDeadline) {
+            card.setPriority((Priority) priorityBox.getSelectedItem());
+            card.setTitle(titleTextField.getText());
+            setTitle(card.getTitle());
+            card.setDescription(descriptionTextArea.getText());
+
+            card.setDeadline(null); // no deadline
+
+            card.setProgress(progressSlider.getValue());
+            if (parentCardBox.getSelectedItem() != null && !((Card) parentCardBox.getSelectedItem()).getTitle().equals("None")) {
+                ((Card) parentCardBox.getSelectedItem()).addSubCard(card);
+            }
+
+            mainPanel.revalidate();
+            mainPanel.repaint();
+        } else {
+            try {
+                updateCard();
+            } catch (Exception ignored) {
+
+            }
+        }
+    }
+
+    public void updateLabels() {
+        potentialLabels.clear();
+        labelBoxes.clear();
+        for (Component comp : labelPanel.getComponents()) {
+            if (comp instanceof JCheckBox) {
+                labelPanel.remove(comp);
+            }
+        }
+        for (CardLabel l : controller.getLabels()) {
+            JCheckBox labelBox = new JCheckBox();
+            labelBox.setPreferredSize(new Dimension(475, 30));
+            labelBox.setText(l.getText());
+            labelBox.setBackground(l.getBackground());
+            labelBox.setForeground(Color.BLACK);
+            labelBox.addActionListener(this);
+            labelBox.setSelected(card.getLabels().contains(l));
+            labelBox.setVisible(true);
+            potentialLabels.add(l);
+            labelBoxes.add(labelBox);
+            labelPanel.add(labelBox);
+        }
     }
 
     @Override

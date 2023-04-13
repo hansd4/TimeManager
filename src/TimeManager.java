@@ -59,6 +59,10 @@ public class TimeManager {
         return newLabel;
     }
 
+    public void removeLabel(CardLabel label) {
+        labels.remove(label);
+    }
+
     public void update() {
         for (CardList list : cardLists) {
             for (Card card : list.getCards()) {
@@ -128,6 +132,27 @@ public class TimeManager {
         }
         System.out.println("For card " + card + ", returning: " + result);
         return result;
+    }
+
+    public CardLabel getLabelAsGUI(CardLabel c) {
+        for (CardLabel label : labels) {
+            if (c.equals(label)) {
+                return label.clone();
+            }
+        }
+        return c;
+    }
+
+    public boolean validLabel(CardLabel c) {
+        for (CardLabel label : labels) {
+            System.out.println("Checking label " + label + " in master list. ");
+            if (c.equals(label)) {
+                System.out.println(c + " matches " + label + ". " + c + " is a valid Label.");
+                return true;
+            }
+        }
+        System.out.println(c + " does not match with any labels in master list. " + c + " is NOT a valid label.");
+        return false;
     }
 
     private void sortCards() { // sorts all cards into their respective lists based on deadline and completion status

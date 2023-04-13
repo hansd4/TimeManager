@@ -22,9 +22,81 @@ public class CardLabelEditor extends JFrame implements ActionListener {
         this.setLocation(MouseInfo.getPointerInfo().getLocation());
         this.pack();
 
+        System.out.println("Instantiated cardLabelEditor with label " + cardLabel);
+
         // previewButton
         previewButton.setText("Preview");
         previewButton.setBackground(cardLabel.getBackground());
+
+        // cardLabel
+        textField.setText(cardLabel.getText());
+
+        // listens for close
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                quit();
+            }
+        });
+        // listens for color
+        colorButton.addActionListener(this);
+        // listens for enter key press (close)
+        class QuitAction extends AbstractAction {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                quit();
+            }
+        }
+        QuitAction q = new QuitAction();
+        mainPanel.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "quit");
+        mainPanel.getActionMap().put("quit", q);
+        for (Component comp : mainPanel.getComponents()) {
+            if (!(comp instanceof JTextArea)) {
+                JComponent c = (JComponent) comp;
+                c.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "quit");
+                c.getActionMap().put("quit", q);
+            }
+        }
+        // listens for DEL key press (delete label)
+        class DelAction extends AbstractAction {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editor.getController().removeLabel(cardLabel);
+                quit();
+            }
+        }
+        DelAction d = new DelAction();
+        mainPanel.getInputMap().put(KeyStroke.getKeyStroke("DELETE"), "delete");
+        mainPanel.getActionMap().put("delete", d);
+        for (Component comp : mainPanel.getComponents()) {
+            if (!(comp instanceof JTextArea)) {
+                JComponent c = (JComponent) comp;
+                c.getInputMap().put(KeyStroke.getKeyStroke("DELETE"), "delete");
+                c.getActionMap().put("delete", d);
+            }
+        }
+
+        this.cardLabel = cardLabel;
+        this.editor = editor;
+
+        this.setVisible(true);
+    }
+
+    public CardLabelEditor(CardLabel cardLabel) {
+        super(cardLabel.getText());
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setContentPane(mainPanel);
+        this.setLocation(MouseInfo.getPointerInfo().getLocation());
+        this.pack();
+
+        System.out.println("Instantiated cardLabelEditor with label " + cardLabel);
+
+        // previewButton
+        previewButton.setText("Preview");
+        previewButton.setBackground(cardLabel.getBackground());
+
+        // cardLabel
+        textField.setText(cardLabel.getText());
 
         // listens for close
         this.addWindowListener(new WindowAdapter() {
@@ -72,13 +144,16 @@ public class CardLabelEditor extends JFrame implements ActionListener {
         }
 
         this.cardLabel = cardLabel;
-        this.editor = editor;
 
         this.setVisible(true);
     }
 
     public void quit() {
         cardLabel.setText(textField.getText());
+        if (editor != null) {
+            editor.updateLabels();
+            editor.labelEditorFinish(cardLabel);
+        }
         dispose();
     }
 
