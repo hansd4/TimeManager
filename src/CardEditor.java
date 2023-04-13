@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,8 +58,9 @@ public class CardEditor extends JFrame implements ActionListener {
 
     public CardEditor(Card card, TimeManager controller) {
         super(card.getTitle());
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // TODO: add closing functionality
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setContentPane(mainPanel);
+        this.setLocation(MouseInfo.getPointerInfo().getLocation());
         this.pack();
 
         this.card = card;
@@ -73,15 +75,26 @@ public class CardEditor extends JFrame implements ActionListener {
         // initialize GUI components
         priorityBox.setModel(new DefaultComboBoxModel(Priority.values()));
         parentCardBox.setModel(new DefaultComboBoxModel(controller.getCardsBesides(card).toArray(new Card[0])));
+        progressSlider.setEnabled(card.getSubCards().size() == 0);
 
         // listeners
         // listens for close
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                updateCard();
-                controller.update();
-                dispose();
+                try {
+                    updateCard();
+                    controller.update();
+                    dispose();
+                } catch (ParseException ex) {
+                    JFrame warningWindow = new JFrame();
+                    JLabel warning = new JLabel();
+                    warning.setText("Invalid date!");
+                    warningWindow.add(warning);
+                    warningWindow.setLocation(MouseInfo.getPointerInfo().getLocation());
+                    warningWindow.pack();
+                    warningWindow.setVisible(true);
+                }
             }
         });
 
@@ -151,7 +164,7 @@ public class CardEditor extends JFrame implements ActionListener {
         controller.update();
     }
 
-    public void updateCard() {
+    public void updateCard() throws ParseException {
         card.setPriority((Priority) priorityBox.getSelectedItem());
         card.setTitle(titleTextField.getText());
         setTitle(card.getTitle());
@@ -163,11 +176,7 @@ public class CardEditor extends JFrame implements ActionListener {
                 hourField.getText() + " " +
                 minuteField.getText() + " " +
                 AMPMBox.getSelectedItem();
-        try {
-            card.setDeadline(f.parse(deadline));
-        } catch (Exception e) { // TODO: warn user if date invalid, don't take it
-            System.out.println("Date could not be parsed. Exception: " + e.getMessage());
-        }
+        card.setDeadline(f.parse(deadline));
 
         card.setProgress(progressSlider.getValue());
 

@@ -38,6 +38,7 @@ public class Card extends JPanel {
 
     // misc
     private SimpleDateFormat f;
+    private TimeManager controller;
 
     public Card(Priority priority,
                 String title,
@@ -45,7 +46,8 @@ public class Card extends JPanel {
                 Date startDate,
                 Date deadline,
                 int progress,
-                ArrayList<CardLabel> labels) {
+                ArrayList<CardLabel> labels,
+                TimeManager controller) {
         super();
 
         // data init
@@ -61,6 +63,7 @@ public class Card extends JPanel {
         this.expanded = false;
 
         this.f = new SimpleDateFormat("M/d @ h:mm a");
+        this.controller = controller;
 
         loadGUI();
 
@@ -74,7 +77,8 @@ public class Card extends JPanel {
                 Date deadline,
                 int progress,
                 ArrayList<CardLabel> labels,
-                Card parentCard) {
+                Card parentCard,
+                TimeManager controller) {
         super();
 
         // data init
@@ -90,13 +94,20 @@ public class Card extends JPanel {
         this.expanded = false;
 
         this.f = new SimpleDateFormat("M/d @ h:mm a");
+        this.controller = controller;
 
+        // load GUI with data
         loadGUI();
+
+        // listeners
+        mainButton.addActionListener(e -> {
+            new CardEditor(this, controller);
+        });
 
         this.setVisible(true);
     }
 
-    public Card() {
+    public Card(TimeManager controller) {
         super();
 
         // data init
@@ -112,6 +123,7 @@ public class Card extends JPanel {
         this.expanded = false;
 
         this.f = new SimpleDateFormat("M/d @ h:mm a");
+        this.controller = controller;
 
         loadGUI();
 
@@ -217,12 +229,13 @@ public class Card extends JPanel {
     public void setDeadline(Date newDeadline) {
         deadline = newDeadline;
         deadlineLabel.setText(f.format(deadline));
-        updateProgressBars();
+        updateDeadlineBar();
     }
 
     public void setProgress(int newProgress) {
         progress = newProgress;
         progressLabel.setText(progress + "%");
+        updateProgressBar();
     }
 
     public void setSubCards(ArrayList<Card> newSubCards) {
@@ -263,11 +276,34 @@ public class Card extends JPanel {
 
     public void loadGUI() {
         mainButton.setText(title);
-        updateProgressBars();
+        if (deadline != null) {
+            deadlineLabel.setText(f.format(deadline));
+            updateDeadlineBar();
+        }
+        progressLabel.setText(progress + "%");
+        updateProgressBar();
     }
 
-    public void updateProgressBars() {
-        // TODO
+    public void updateDeadlineBar() {
+        if (deadline.after(Calendar.getInstance().getTime())) { // not past due
+            long totalTime = deadline.getTime() - startDate.getTime();
+            long currentTime = Calendar.getInstance().getTimeInMillis() - startDate.getTime();
+            deadlineBar.setValue((int) (((double) currentTime / totalTime) * 100));
+        } else { // past due, 100%
+            deadlineBar.setValue(100);
+        }
+    }
+
+    public void updateProgressBar() {
+        if (subCards.size() == 0) { // no need to calculate further
+            progressBar.setValue(progress);
+        } else { // calculate progress based on progress of subcards
+            int totalProgress = 0;
+            for (Card sub : subCards) {
+                totalProgress += sub.progress;
+            }
+            progressBar.setValue((int) ((double) totalProgress / subCards.size()));
+        }
     }
 
     @Override

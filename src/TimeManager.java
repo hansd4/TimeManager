@@ -28,7 +28,7 @@ public class TimeManager {
     }
 
     public void newCard() {
-        Card newCard = new Card();
+        Card newCard = new Card(this);
         CardEditor editor = new CardEditor(newCard, this);
         cardLists[0].getCards().add(newCard);
     }
