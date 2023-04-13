@@ -68,6 +68,9 @@ public class MainFrame extends JFrame {
 
         // listeners
         // button listeners
+        addButton.addActionListener(e -> {
+
+        });
         tasksButton.addActionListener(e -> {
             switchPanels((JButton) e.getSource());
         });

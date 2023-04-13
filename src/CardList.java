@@ -25,9 +25,4 @@ public class CardList {
     public void addCard(Card card) {
         cards.add(card);
     }
-
-    // stub to override
-    public boolean validDeadline(Date deadline) {
-        return false;
-    }
 }

@@ -59,4 +59,8 @@ public class Card extends JPanel {
     public Date getDeadline() {
         return deadline;
     }
+
+    public int getProgress() {
+        return progress;
+    }
 }
