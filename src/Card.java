@@ -164,10 +164,14 @@ public class Card extends JPanel {
 
     public ArrayList<Card> getAllSubCards() {
         ArrayList<Card> subSubCards = new ArrayList<>();
+        System.out.println("Starting search in card " + this);
         for (Card c : subCards) {
+            System.out.println("Searching through card " + c);
             subSubCards.addAll(c.getAllSubCards());
+            System.out.println("Result now " + subSubCards);
         }
         subSubCards.addAll(subCards);
+        System.out.println("Added all subcards. Result now " + subSubCards);
         return subSubCards;
     }
 
@@ -289,7 +293,18 @@ public class Card extends JPanel {
             new CardEditor(this, controller);
         });
         expandButton.addActionListener(e -> {
-
+            expanded = !expanded;
+            if (expanded) {
+                expandButton.setText("v");
+                for (Card sub : subCards) {
+                    sub.setVisible(true);
+                }
+            } else {
+                expandButton.setText("^");
+                for (Card sub : subCards) {
+                    sub.setVisible(false);
+                }
+            }
         });
     }
 

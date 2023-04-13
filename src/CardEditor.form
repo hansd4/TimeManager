@@ -162,8 +162,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="f56a8" binding="subCardsPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          <grid id="f56a8" binding="subCardsPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints/>
             <properties>
               <maximumSize width="82" height="112"/>
@@ -171,33 +170,25 @@
             <border type="none"/>
             <children>
               <component id="ea764" class="javax.swing.JButton" binding="addSubCardsButton">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
+                <constraints/>
                 <properties>
                   <text value="Add Card"/>
                 </properties>
               </component>
               <component id="f45d9" class="javax.swing.JCheckBox" binding="subCardBox1">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
+                <constraints/>
                 <properties>
                   <text value="CheckBox"/>
                 </properties>
               </component>
               <component id="62ade" class="javax.swing.JCheckBox" binding="subCardBox2">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
+                <constraints/>
                 <properties>
                   <text value="CheckBox"/>
                 </properties>
               </component>
               <component id="25447" class="javax.swing.JCheckBox" binding="subCardBox3">
-                <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
+                <constraints/>
                 <properties>
                   <text value="CheckBox"/>
                 </properties>
@@ -221,8 +212,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="1d25d" binding="labelPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          <grid id="1d25d" binding="labelPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints/>
             <properties>
               <maximumSize width="82" height="112"/>
@@ -230,34 +220,26 @@
             <border type="none"/>
             <children>
               <component id="828a6" class="javax.swing.JButton" binding="addLabelButton">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
+                <constraints/>
                 <properties>
                   <text value="Add Label"/>
                 </properties>
               </component>
               <component id="be8cd" class="javax.swing.JCheckBox" binding="labelBox1">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
+                <constraints/>
                 <properties>
                   <background color="-12828863"/>
                   <text value="CheckBox"/>
                 </properties>
               </component>
               <component id="2c6a" class="javax.swing.JCheckBox" binding="labelBox2">
-                <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
+                <constraints/>
                 <properties>
                   <text value="CheckBox"/>
                 </properties>
               </component>
               <component id="9d38c" class="javax.swing.JCheckBox" binding="labelBox3">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
+                <constraints/>
                 <properties>
                   <text value="CheckBox"/>
                 </properties>

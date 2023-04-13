@@ -73,7 +73,7 @@ public class CardEditor extends JFrame implements ActionListener {
 
         // initialize GUI components
         priorityBox.setModel(new DefaultComboBoxModel(Priority.values()));
-        parentCardBox.setModel(new DefaultComboBoxModel(controller.getCardsBesides(card).toArray(new Card[0])));
+        parentCardBox.setModel(new DefaultComboBoxModel(controller.getCardsBesides(card).toArray()));
         progressSlider.setEnabled(card.getSubCards().size() == 0);
 
         // listeners
@@ -199,6 +199,9 @@ public class CardEditor extends JFrame implements ActionListener {
         card.setDeadline(f.parse(deadline));
 
         card.setProgress(progressSlider.getValue());
+        if (parentCardBox.getSelectedItem() != null && !((Card) parentCardBox.getSelectedItem()).getTitle().equals("None")) {
+            card.setParentCard((Card) parentCardBox.getSelectedItem());
+        }
 
         mainPanel.revalidate();
         mainPanel.repaint();

@@ -47,14 +47,26 @@ public class TimeManager {
     }
 
     public ArrayList<Card> getCardsBesides(Card card) {
+        System.out.println("Starting search");
         ArrayList<Card> result = new ArrayList<>();
         for (CardList list : cardLists) {
+            System.out.println("Going through card list " + list);
             for (Card c : list.getCards()) {
+                System.out.println("Going through card " + c);
                 if (!card.equals(c)) {
                     result.addAll(c.getAllSubCards(card));
+                    if (c.getParentCard() == null || !c.getParentCard().equals(card)) {
+                        result.add(c);
+                    }
+                    System.out.println("Finished card search. Result is now " + result);
+                } else {
+                    System.out.println("Denied, card to be avoided found");
                 }
             }
         }
+        Card placeholder = new Card(this);
+        placeholder.setTitle("None");
+        result.add(0, placeholder);
         return result;
     }
 
