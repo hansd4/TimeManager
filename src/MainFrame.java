@@ -131,12 +131,15 @@ public class MainFrame extends JFrame {
                 System.out.println("Successfully located listGUI at " + listGUI);
                 System.out.println("C is null? " + (c == null));
                 listGUI.getParent().getParent().getParent().setVisible(true);
-                for (Card card : c.getCards()) {
+                listGUI.removeAll(); // clear list of cards
+                for (Card card : c.getCards()) { // re-add cards
                     System.out.println("Card " + card);
                     System.out.println("Card is null? " + (card == null));
                     listGUI.add(card.getMainPanel());
                 }
             }
         }
+        mainPanel.revalidate();
+        mainPanel.repaint();
     }
 }

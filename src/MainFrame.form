@@ -76,7 +76,10 @@
                 <properties>
                   <background color="-16777216"/>
                   <foreground color="-16777216"/>
+                  <maximumSize width="535" height="535"/>
+                  <minimumSize width="535" height="535"/>
                   <opaque value="true"/>
+                  <preferredSize width="535" height="535"/>
                   <verticalScrollBarPolicy value="21"/>
                   <visible value="true"/>
                 </properties>
@@ -87,9 +90,9 @@
                     <properties>
                       <background color="-16777216"/>
                       <foreground color="-16777216"/>
-                      <maximumSize width="280" height="32767"/>
-                      <minimumSize width="280" height="0"/>
-                      <preferredSize width="280" height="280"/>
+                      <maximumSize width="32767" height="535"/>
+                      <minimumSize width="32767" height="535"/>
+                      <preferredSize width="32767" height="535"/>
                     </properties>
                     <border type="none"/>
                     <children>
@@ -202,7 +205,9 @@
                             <properties>
                               <background color="-16777216"/>
                               <horizontalScrollBarPolicy value="31"/>
-                              <maximumSize width="280" height="32767"/>
+                              <maximumSize width="32767" height="535"/>
+                              <minimumSize width="32767" height="535"/>
+                              <preferredSize width="32767" height="535"/>
                             </properties>
                             <border type="none"/>
                             <children>

@@ -34,10 +34,11 @@
             <properties>
               <background color="-16777216"/>
               <continuousLayout value="false"/>
-              <dividerLocation value="36"/>
+              <dividerLocation value="26"/>
               <dividerSize value="0"/>
               <doubleBuffered value="false"/>
               <foreground color="-1"/>
+              <lastDividerLocation value="26"/>
               <orientation value="0"/>
             </properties>
             <border type="none"/>
@@ -54,7 +55,8 @@
                   <defaultCapable value="true"/>
                   <doubleBuffered value="false"/>
                   <focusPainted value="false"/>
-                  <font name="Roboto" size="28" style="0"/>
+                  <focusable value="false"/>
+                  <font name="Roboto" size="24" style="0"/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="2"/>
                   <horizontalTextPosition value="2"/>
@@ -176,16 +178,6 @@
                     </properties>
                     <border type="none"/>
                     <children>
-                      <grid id="e9531" binding="cardCategoryPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-                        <constraints>
-                          <splitpane position="left"/>
-                        </constraints>
-                        <properties>
-                          <background color="-16777216"/>
-                        </properties>
-                        <border type="none"/>
-                        <children/>
-                      </grid>
                       <component id="3a865" class="javax.swing.JButton" binding="expandButton">
                         <constraints>
                           <splitpane position="right"/>
@@ -203,6 +195,34 @@
                           <verticalTextPosition value="0"/>
                         </properties>
                       </component>
+                      <scrollpane id="a5fcd" binding="labelScrollPane">
+                        <constraints>
+                          <splitpane position="left"/>
+                        </constraints>
+                        <properties>
+                          <background color="-16777216"/>
+                          <foreground color="-1"/>
+                          <maximumSize width="32767" height="18"/>
+                          <minimumSize width="200" height="18"/>
+                          <preferredSize width="32767" height="18"/>
+                          <verticalScrollBarPolicy value="21"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <grid id="4b570" binding="labelPanel" layout-manager="FlowLayout" hgap="1" vgap="0" flow-align="3">
+                            <constraints/>
+                            <properties>
+                              <background color="-16777216"/>
+                              <foreground color="-1"/>
+                              <maximumSize width="32767" height="18"/>
+                              <minimumSize width="200" height="18"/>
+                              <preferredSize width="32767" height="18"/>
+                            </properties>
+                            <border type="none"/>
+                            <children/>
+                          </grid>
+                        </children>
+                      </scrollpane>
                     </children>
                   </splitpane>
                 </children>

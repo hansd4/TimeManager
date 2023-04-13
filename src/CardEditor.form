@@ -3,9 +3,11 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="9" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="546" height="513"/>
+      <xy x="20" y="20" width="551" height="37956"/>
     </constraints>
-    <properties/>
+    <properties>
+      <autoscrolls value="false"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="bf364" class="javax.swing.JTextField" binding="titleTextField">
@@ -155,42 +157,35 @@
           <text value="Sub Cards"/>
         </properties>
       </component>
-      <scrollpane id="6c7e">
+      <scrollpane id="6c7e" binding="subCardsScrollPane">
         <constraints>
-          <grid row="7" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="475" height="50"/>
+            <preferred-size width="475" height="50"/>
+            <maximum-size width="475" height="50"/>
+          </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <horizontalScrollBarPolicy value="31"/>
+        </properties>
         <border type="none"/>
         <children>
-          <grid id="f56a8" binding="subCardsPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+          <grid id="f56a8" binding="subCardsPanel" layout-manager="FlowLayout" hgap="5" vgap="0" flow-align="1">
             <constraints/>
             <properties>
-              <maximumSize width="82" height="112"/>
+              <maximumSize width="475" height="1000"/>
+              <minimumSize width="475" height="1000"/>
+              <preferredSize width="475" height="1000"/>
             </properties>
             <border type="none"/>
             <children>
               <component id="ea764" class="javax.swing.JButton" binding="addSubCardsButton">
                 <constraints/>
                 <properties>
+                  <maximumSize width="475" height="30"/>
+                  <minimumSize width="475" height="30"/>
+                  <preferredSize width="475" height="30"/>
                   <text value="Add Card"/>
-                </properties>
-              </component>
-              <component id="f45d9" class="javax.swing.JCheckBox" binding="subCardBox1">
-                <constraints/>
-                <properties>
-                  <text value="CheckBox"/>
-                </properties>
-              </component>
-              <component id="62ade" class="javax.swing.JCheckBox" binding="subCardBox2">
-                <constraints/>
-                <properties>
-                  <text value="CheckBox"/>
-                </properties>
-              </component>
-              <component id="25447" class="javax.swing.JCheckBox" binding="subCardBox3">
-                <constraints/>
-                <properties>
-                  <text value="CheckBox"/>
                 </properties>
               </component>
             </children>
@@ -205,43 +200,36 @@
           <text value="Labels"/>
         </properties>
       </component>
-      <scrollpane id="68d4f">
+      <scrollpane id="68d4f" binding="labelScrollPane">
         <constraints>
-          <grid row="8" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="475" height="50"/>
+            <preferred-size width="475" height="50"/>
+            <maximum-size width="475" height="50"/>
+          </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <horizontalScrollBarPolicy value="31"/>
+        </properties>
         <border type="none"/>
         <children>
-          <grid id="1d25d" binding="labelPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+          <grid id="1d25d" binding="labelPanel" layout-manager="FlowLayout" hgap="5" vgap="0" flow-align="1">
             <constraints/>
             <properties>
-              <maximumSize width="82" height="112"/>
+              <inheritsPopupMenu value="false"/>
+              <maximumSize width="475" height="1000"/>
+              <minimumSize width="475" height="1000"/>
+              <preferredSize width="475" height="1000"/>
             </properties>
             <border type="none"/>
             <children>
               <component id="828a6" class="javax.swing.JButton" binding="addLabelButton">
                 <constraints/>
                 <properties>
+                  <maximumSize width="475" height="30"/>
+                  <minimumSize width="475" height="30"/>
+                  <preferredSize width="475" height="30"/>
                   <text value="Add Label"/>
-                </properties>
-              </component>
-              <component id="be8cd" class="javax.swing.JCheckBox" binding="labelBox1">
-                <constraints/>
-                <properties>
-                  <background color="-12828863"/>
-                  <text value="CheckBox"/>
-                </properties>
-              </component>
-              <component id="2c6a" class="javax.swing.JCheckBox" binding="labelBox2">
-                <constraints/>
-                <properties>
-                  <text value="CheckBox"/>
-                </properties>
-              </component>
-              <component id="9d38c" class="javax.swing.JCheckBox" binding="labelBox3">
-                <constraints/>
-                <properties>
-                  <text value="CheckBox"/>
                 </properties>
               </component>
             </children>

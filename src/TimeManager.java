@@ -19,21 +19,53 @@ public class TimeManager {
         labels = new ArrayList<>();
         view = new MainFrame(this);
 
-        try {
-            Thread.sleep(60000);
-            update();
-        } catch (Exception ignored) {
+        while (true) {
+            try {
+                Thread.sleep(15000); // refresh GUI every 15 seconds
+                update();
+            } catch (Exception ignored) {
 
+            }
         }
     }
 
     public void newCard() {
         Card newCard = new Card(this);
         new CardEditor(newCard, this);
-        cardLists[0].getCards().add(newCard);
+        cardLists[4].getCards().add(newCard); // default to no due date
+    }
+
+    public void newCard(Card parent) {
+        Card newCard = new Card(this);
+        parent.addSubCard(newCard);
+        new CardEditor(newCard, this);
+        cardLists[4].getCards().add(newCard); // default to no due date
+    }
+
+    public void removeCard(Card c) {
+        for (CardList list : cardLists) {
+            for (Card card : list.getCards()) {
+                if (c.equals(card)) {
+                    list.getCards().remove(c);
+                    break;
+                }
+            }
+        }
+        update();
+    }
+
+    public CardLabel addLabel(CardLabel newLabel) {
+        labels.add(newLabel);
+        return newLabel;
     }
 
     public void update() {
+        for (CardList list : cardLists) {
+            for (Card card : list.getCards()) {
+                System.out.println("Loading GUI of " + card);
+                card.loadGUI();
+            }
+        }
         view.displayCardLists();
     }
 

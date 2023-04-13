@@ -23,13 +23,7 @@ public class CardEditor extends JFrame implements ActionListener {
     private JSlider progressSlider;
     private JComboBox parentCardBox;
     private JButton addSubCardsButton;
-    private JCheckBox subCardBox1;
-    private JCheckBox subCardBox3;
-    private JCheckBox subCardBox2;
     private JButton addLabelButton;
-    private JCheckBox labelBox1;
-    private JCheckBox labelBox2;
-    private JCheckBox labelBox3;
     private JLabel deadlineDateLabel;
     private JLabel titleLabel;
     private JLabel descLabel;
@@ -45,6 +39,8 @@ public class CardEditor extends JFrame implements ActionListener {
     private ArrayList<JCheckBox> labelBoxes;
     private ArrayList<CardLabel> potentialLabels;
     private JLabel labelLabel;
+    private JScrollPane subCardsScrollPane;
+    private JScrollPane labelScrollPane;
 
     // card being edited
     private Card card;
@@ -75,6 +71,8 @@ public class CardEditor extends JFrame implements ActionListener {
         priorityBox.setModel(new DefaultComboBoxModel(Priority.values()));
         parentCardBox.setModel(new DefaultComboBoxModel(controller.getCardsBesides(card).toArray()));
         progressSlider.setEnabled(card.getSubCards().size() == 0);
+        subCardsScrollPane.getVerticalScrollBar().setUnitIncrement(25);
+        labelScrollPane.getVerticalScrollBar().setUnitIncrement(25);
 
         // listeners
         // listens for close
@@ -101,6 +99,33 @@ public class CardEditor extends JFrame implements ActionListener {
                 c.getActionMap().put("quit", q);
             }
         }
+        // listens for DEL key press (delete card)
+        class DelAction extends AbstractAction {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.removeCard(card);
+                quit();
+            }
+        }
+        DelAction d = new DelAction();
+        mainPanel.getInputMap().put(KeyStroke.getKeyStroke("DELETE"), "delete");
+        mainPanel.getActionMap().put("delete", d);
+        for (Component comp : mainPanel.getComponents()) {
+            if (!(comp instanceof JTextArea)) {
+                JComponent c = (JComponent) comp;
+                c.getInputMap().put(KeyStroke.getKeyStroke("DELETE"), "delete");
+                c.getActionMap().put("delete", d);
+            }
+        }
+        // addcard and addlabel action listeners
+        addSubCardsButton.addActionListener(e -> {
+            controller.newCard(card);
+        });
+        addLabelButton.addActionListener(e -> {
+            CardLabel c = new CardLabel();
+            CardLabelEditor editor = new CardLabelEditor(c, this);
+            card.addLabel(controller.addLabel(c));
+        });
 
         updateGUI();
         this.setVisible(true);
@@ -154,6 +179,7 @@ public class CardEditor extends JFrame implements ActionListener {
         for (Card c : controller.getCardsBesidesParent(card)) {
             if (!c.equals(card)) {
                 JCheckBox subCardBox = new JCheckBox();
+                subCardBox.setPreferredSize(new Dimension(475, 30));
                 subCardBox.setText(c.getTitle());
                 subCardBox.addActionListener(this);
                 subCardBox.setSelected(card.getSubCards().contains(c));
@@ -172,8 +198,10 @@ public class CardEditor extends JFrame implements ActionListener {
         }
         for (CardLabel l : controller.getLabels()) {
             JCheckBox labelBox = new JCheckBox();
-            labelBox.setText(l.getName());
-            labelBox.setBackground(l.getColor());
+            labelBox.setPreferredSize(new Dimension(475, 30));
+            labelBox.setText(l.getText());
+            labelBox.setBackground(l.getBackground());
+            labelBox.setForeground(Color.BLACK);
             labelBox.addActionListener(this);
             labelBox.setSelected(card.getLabels().contains(l));
             labelBox.setVisible(true);
@@ -190,7 +218,7 @@ public class CardEditor extends JFrame implements ActionListener {
         card.setPriority((Priority) priorityBox.getSelectedItem());
         card.setTitle(titleTextField.getText());
         setTitle(card.getTitle());
-        card.setDescrption(descriptionTextArea.getText());
+        card.setDescription(descriptionTextArea.getText());
 
         String deadline = monthField.getText() + " " +
                 dayField.getText() + " " +

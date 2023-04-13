@@ -3,6 +3,7 @@ import java.awt.*;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,6 +24,8 @@ public class Card extends JPanel {
     private JSplitPane labelSplitPane;
     private JPanel cardCategoryPanel;
     private JButton expandButton;
+    private JPanel labelPanel;
+    private JScrollPane labelScrollPane;
 
     // data
     private Priority priority;
@@ -49,6 +52,11 @@ public class Card extends JPanel {
                 ArrayList<CardLabel> labels,
                 TimeManager controller) {
         super();
+
+        // GUI setup
+        ScrollBar s = new ScrollBar();
+        s.setPreferredSize(new Dimension(1, 1));
+        this.labelScrollPane.setHorizontalScrollBar(s);
 
         // data init
         this.priority = priority;
@@ -82,6 +90,11 @@ public class Card extends JPanel {
                 TimeManager controller) {
         super();
 
+        // GUI setup
+        ScrollBar s = new ScrollBar();
+        s.setPreferredSize(new Dimension(1, 1));
+        this.labelScrollPane.setHorizontalScrollBar(s);
+
         // data init
         this.priority = priority;
         this.title = title;
@@ -109,6 +122,11 @@ public class Card extends JPanel {
     public Card(TimeManager controller) {
         super();
 
+        // GUI setup
+        ScrollBar s = new ScrollBar();
+        s.setPreferredSize(new Dimension(1, 1));
+        this.labelScrollPane.setHorizontalScrollBar(s);
+
         // data init
         this.priority = Priority.NO;
         this.title = "";
@@ -131,6 +149,7 @@ public class Card extends JPanel {
     }
 
     public JPanel getMainPanel() {
+        loadGUI();
         return mainPanel;
     }
 
@@ -223,7 +242,7 @@ public class Card extends JPanel {
         mainButton.setText(title);
     }
 
-    public void setDescrption(String newDescription) {
+    public void setDescription(String newDescription) {
         description = newDescription;
     }
 
@@ -267,12 +286,12 @@ public class Card extends JPanel {
 
     public void addLabel(CardLabel l) {
         labels.add(l);
-        cardCategoryPanel.add(l);
+        labelPanel.add(l);
     }
 
     public void removeLabel(CardLabel l) {
         labels.remove(l);
-        cardCategoryPanel.remove(l);
+        labelPanel.remove(l);
     }
 
     public void setParentCard(Card newParentCard) {
@@ -284,6 +303,7 @@ public class Card extends JPanel {
     }
 
     public void loadGUI() {
+        System.out.println(Arrays.toString(labelPanel.getComponents()));
         mainButton.setText(title);
         if (deadline != null) {
             deadlineLabel.setText(f.format(deadline));
@@ -292,6 +312,8 @@ public class Card extends JPanel {
         progressLabel.setText(progress + "%");
         updateProgressBar();
         updateExpand();
+        mainPanel.revalidate();
+        mainPanel.repaint();
     }
 
     public void addListeners() {
@@ -337,6 +359,7 @@ public class Card extends JPanel {
                 totalProgress += sub.progress;
             }
             progressBar.setValue((int) ((double) totalProgress / subCards.size()));
+            progress = progressBar.getValue();
         }
     }
 

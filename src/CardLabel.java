@@ -1,23 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class CardLabel extends JLabel{
-    private Color color;
-    private String name;
-
-    public CardLabel(Color color, String name) {
+public class CardLabel extends JButton {
+    public CardLabel() {
         super();
-        this.color = color;
-        this.name = name;
-        this.setText(name);
-        this.setBackground(color);
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public String getName() {
-        return name;
+        setText("Label");
+        setPreferredSize(new Dimension(78, 18));
+        setBackground(Color.BLACK);
+        setForeground(Color.WHITE);
+        setFont(new Font("Roboto", Font.BOLD, 10));
+        setBorderPainted(false);
+        setFocusPainted(false);
     }
 }
