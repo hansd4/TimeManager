@@ -6,6 +6,7 @@ import java.util.Iterator;
 public class TimeManager {
     private MainFrame view;
     private CardList[] cardLists;
+    private ArrayList<CardLabel> labels;
 
     public TimeManager() {
         cardLists = new CardList[6];
@@ -15,12 +16,49 @@ public class TimeManager {
         cardLists[3] = new CardList("Later");
         cardLists[4] = new CardList("No due date");
         cardLists[5] = new CardList("Done");
+        labels = new ArrayList<>();
         view = new MainFrame(this);
+    }
+
+    public void newCard() {
+        Card newCard = new Card();
+        CardEditor editor = new CardEditor(newCard, this);
+        cardLists[0].getCards().add(newCard);
+        view.displayCardLists();
     }
 
     public CardList[] getCardLists() {
         sortCards();
         return cardLists;
+    }
+
+    public ArrayList<CardLabel> getLabels() {
+        return labels;
+    }
+
+    public ArrayList<Card> getCardsBesides(Card card) {
+        ArrayList<Card> result = new ArrayList<>();
+        for (CardList list : cardLists) {
+            for (Card c : list.getCards()) {
+                if (!card.equals(c)) {
+                    result.addAll(c.getAllSubCards(card));
+                }
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Card> getCardsBesidesParent(Card card) {
+        ArrayList<Card> result = new ArrayList<>();
+        ArrayList<Card> cardsToAvoid = card.getAllParentCards();
+        for (CardList list : cardLists) {
+            for (Card c : list.getCards()) {
+                if (!cardsToAvoid.contains(c)) {
+                    result.addAll(c.getAllSubCards());
+                }
+            }
+        }
+        return result;
     }
 
     private void sortCards() { // sorts all cards into their respective lists based on deadline and completion status
@@ -35,9 +73,8 @@ public class TimeManager {
                 Date now = Calendar.getInstance().getTime();
 
                 ArrayList<Card> cards = c.getCards();
-                Iterator<Card> cardIterator = cards.iterator();
-                while (cardIterator.hasNext()) {
-                    Card card = cardIterator.next();
+                for (int i = 0; i < cards.size(); i++) {
+                    Card card = cards.get(i);
                     Date deadDate = card.getDeadline();
                     int progress = card.getProgress();
                     boolean done = progress >= 100;
@@ -45,27 +82,33 @@ public class TimeManager {
                     if (deadDate == null) { // no due date
                         if (!listTitle.equals("No due date")) { // card in wrong list, switching to no due date list
                             switchLists(card, c, cardLists[4]);
+                            i--;
                         } // otherwise, keep card in list
                     } else if (done) { // card done, 100% progress
                         if (!listTitle.equals("Done")) { // card in wrong list, switching to done list
                             switchLists(card, c, cardLists[5]);
+                            i--;
                         } // otherwise, keep card in list
                     } else { // time based, not done, has a due date. sort into time period
                         if (deadDate.after(twoWeeksFromNow.getTime())) { // more than 2 weeks. list later
                             if (!listTitle.equals("Later")) { // card in wrong list, switching to later list
                                 switchLists(card, c, cardLists[3]);
+                                i--;
                             }
                         } else if (deadDate.after(oneWeekFromNow.getTime())) { // more than 1 week. list next week
                             if (!listTitle.equals("Next week")) {
                                 switchLists(card, c, cardLists[2]);
+                                i--;
                             }
                         } else if (deadDate.after(now)) { // less than one week, still not due. list this week
                             if (!listTitle.equals("This week")) {
                                 switchLists(card, c, cardLists[1]);
+                                i--;
                             }
                         } else { // past due. list past due
                             if (!listTitle.equals("Past due")) { // card in wrong list, switching to past due
                                 switchLists(card, c, cardLists[0]);
+                                i--;
                             }
                         }
                     }
