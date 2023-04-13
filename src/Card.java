@@ -66,6 +66,7 @@ public class Card extends JPanel {
         this.controller = controller;
 
         loadGUI();
+        addListeners();
 
         this.setVisible(true);
     }
@@ -100,9 +101,7 @@ public class Card extends JPanel {
         loadGUI();
 
         // listeners
-        mainButton.addActionListener(e -> {
-            new CardEditor(this, controller);
-        });
+        addListeners();
 
         this.setVisible(true);
     }
@@ -126,6 +125,7 @@ public class Card extends JPanel {
         this.controller = controller;
 
         loadGUI();
+        addListeners();
 
         this.setVisible(true);
     }
@@ -282,6 +282,15 @@ public class Card extends JPanel {
         }
         progressLabel.setText(progress + "%");
         updateProgressBar();
+    }
+
+    public void addListeners() {
+        mainButton.addActionListener(e -> {
+            new CardEditor(this, controller);
+        });
+        expandButton.addActionListener(e -> {
+
+        });
     }
 
     public void updateDeadlineBar() {

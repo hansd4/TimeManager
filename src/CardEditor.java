@@ -1,13 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import static java.awt.event.KeyEvent.VK_ENTER;
 
 public class CardEditor extends JFrame implements ActionListener {
     // UI Components
@@ -82,24 +81,45 @@ public class CardEditor extends JFrame implements ActionListener {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                try {
-                    updateCard();
-                    controller.update();
-                    dispose();
-                } catch (ParseException ex) {
-                    JFrame warningWindow = new JFrame();
-                    JLabel warning = new JLabel();
-                    warning.setText("Invalid date!");
-                    warningWindow.add(warning);
-                    warningWindow.setLocation(MouseInfo.getPointerInfo().getLocation());
-                    warningWindow.pack();
-                    warningWindow.setVisible(true);
-                }
+                quit();
             }
         });
+        // listens for enter key press (close)
+        class QuitAction extends AbstractAction {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                quit();
+            }
+        }
+        QuitAction q = new QuitAction();
+        mainPanel.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "quit");
+        mainPanel.getActionMap().put("quit", q);
+        for (Component comp : mainPanel.getComponents()) {
+            if (!(comp instanceof JTextArea)) {
+                JComponent c = (JComponent) comp;
+                c.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "quit");
+                c.getActionMap().put("quit", q);
+            }
+        }
 
         updateGUI();
         this.setVisible(true);
+    }
+
+    public void quit() {
+        try {
+            updateCard();
+            controller.update();
+            dispose();
+        } catch (ParseException ex) {
+            JFrame warningWindow = new JFrame();
+            JLabel warning = new JLabel();
+            warning.setText("Invalid date!");
+            warningWindow.add(warning);
+            warningWindow.setLocation(MouseInfo.getPointerInfo().getLocation());
+            warningWindow.pack();
+            warningWindow.setVisible(true);
+        }
     }
 
     public void updateGUI() {
