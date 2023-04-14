@@ -74,12 +74,6 @@ public class MainFrame extends JFrame {
         tasksButton.addActionListener(e -> {
             switchPanels((JButton) e.getSource());
         });
-        Button2.addActionListener(e -> {
-            switchPanels((JButton) e.getSource());
-        });
-        Button3.addActionListener(e -> {
-            switchPanels((JButton) e.getSource());
-        });
 
         // listens for quit button (close)
         QuitButton.addActionListener(e -> quit());
