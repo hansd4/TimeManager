@@ -23,7 +23,6 @@ public class CardEditor extends JFrame implements ActionListener {
     private JSlider progressSlider;
     private JComboBox parentCardBox;
     private JButton addSubCardsButton;
-    private JButton addLabelButton;
     private JLabel deadlineDateLabel;
     private JLabel titleLabel;
     private JLabel descLabel;
@@ -35,12 +34,7 @@ public class CardEditor extends JFrame implements ActionListener {
     private JPanel subCardsPanel;
     private ArrayList<JCheckBox> subCardBoxes;
     private ArrayList<Card> potentialSubCards;
-    private JPanel labelPanel;
-    private ArrayList<JCheckBox> labelBoxes;
-    private ArrayList<CardLabel> potentialLabels;
-    private JLabel labelLabel;
     private JScrollPane subCardsScrollPane;
-    private JScrollPane labelScrollPane;
 
     // card being edited
     private Card card;
@@ -64,15 +58,12 @@ public class CardEditor extends JFrame implements ActionListener {
 
         this.subCardBoxes = new ArrayList<>();
         this.potentialSubCards = new ArrayList<>();
-        this.labelBoxes = new ArrayList<>();
-        this.potentialLabels = new ArrayList<>();
 
         // initialize GUI components
         priorityBox.setModel(new DefaultComboBoxModel(Priority.values()));
         parentCardBox.setModel(new DefaultComboBoxModel(controller.getCardsBesides(card).toArray()));
         progressSlider.setEnabled(card.getSubCards().size() == 0);
         subCardsScrollPane.getVerticalScrollBar().setUnitIncrement(25);
-        labelScrollPane.getVerticalScrollBar().setUnitIncrement(25);
 
         // listeners
         // listens for close
@@ -152,16 +143,9 @@ public class CardEditor extends JFrame implements ActionListener {
         addSubCardsButton.addActionListener(e -> {
             controller.newCard(card);
         });
-        addLabelButton.addActionListener(e -> {
-            CardLabel c = new CardLabel(this);
-        });
 
         updateGUI();
         this.setVisible(true);
-    }
-
-    public void labelEditorFinish(CardLabel c) {
-        card.addLabel(controller.addLabel(c));
     }
 
     public TimeManager getController() {
@@ -229,7 +213,6 @@ public class CardEditor extends JFrame implements ActionListener {
                 subCardsPanel.add(subCardBox);
             }
         }
-        updateLabels();
         mainPanel.revalidate();
         mainPanel.repaint();
         controller.update();
@@ -283,29 +266,6 @@ public class CardEditor extends JFrame implements ActionListener {
         }
     }
 
-    public void updateLabels() {
-        potentialLabels.clear();
-        labelBoxes.clear();
-        for (Component comp : labelPanel.getComponents()) {
-            if (comp instanceof JCheckBox) {
-                labelPanel.remove(comp);
-            }
-        }
-        for (CardLabel l : controller.getLabels()) {
-            JCheckBox labelBox = new JCheckBox();
-            labelBox.setPreferredSize(new Dimension(475, 30));
-            labelBox.setText(l.getText());
-            labelBox.setBackground(l.getBackground());
-            labelBox.setForeground(Color.BLACK);
-            labelBox.addActionListener(this);
-            labelBox.setSelected(card.getLabels().contains(l));
-            labelBox.setVisible(true);
-            potentialLabels.add(l);
-            labelBoxes.add(labelBox);
-            labelPanel.add(labelBox);
-        }
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JCheckBox) {
@@ -315,12 +275,6 @@ public class CardEditor extends JFrame implements ActionListener {
                     card.addSubCard(potentialSubCards.get(subCardBoxes.indexOf(box)));
                 } else { // card to be removed from subcards
                     card.removeSubCard(potentialSubCards.get(subCardBoxes.indexOf(box)));
-                }
-            } else if (labelBoxes.contains(box)) {
-                if (box.isSelected()) {
-                    card.addLabel(potentialLabels.get(labelBoxes.indexOf(box)));
-                } else {
-                    card.removeLabel(potentialLabels.get(labelBoxes.indexOf(box)));
                 }
             }
         }

@@ -92,13 +92,6 @@ public class MainFrame extends JFrame {
             }
         });
 
-        // load data
-        if (new File("1.save").exists()) {
-            SaveFile file = (SaveFile) SaveManager.load("1.save");
-            // load all data here
-            textArea1.setText(file.getTextAreaText());
-        }
-
         // start program
         this.setVisible(true);
     }
@@ -110,8 +103,7 @@ public class MainFrame extends JFrame {
     }
 
     public void quit() {
-        SaveFile s = new SaveFile(textArea1.getText());
-        SaveManager.save(s, "1.save");
+        controller.save();
         System.exit(0);
     }
 

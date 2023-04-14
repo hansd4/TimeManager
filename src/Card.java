@@ -26,6 +26,7 @@ public class Card extends JPanel {
     private JButton expandButton;
     private JPanel labelPanel;
     private JScrollPane labelScrollPane;
+    private JLabel parentLabel;
 
     // data
     private Priority priority;
@@ -35,7 +36,6 @@ public class Card extends JPanel {
     private Date deadline; // CAN BE NULL
     private int progress;
     private ArrayList<Card> subCards;
-    private ArrayList<CardLabel> labels;
     private Card parentCard;
     private boolean expanded;
 
@@ -49,7 +49,6 @@ public class Card extends JPanel {
                 Date startDate,
                 Date deadline,
                 int progress,
-                ArrayList<CardLabel> labels,
                 TimeManager controller) {
         super();
 
@@ -66,7 +65,6 @@ public class Card extends JPanel {
         this.deadline = deadline; // CAN BE NULL
         this.progress = progress;
         this.subCards = new ArrayList<>();
-        this.labels = labels;
         this.parentCard = null;
         this.expanded = false;
 
@@ -85,7 +83,6 @@ public class Card extends JPanel {
                 Date startDate,
                 Date deadline,
                 int progress,
-                ArrayList<CardLabel> labels,
                 Card parentCard,
                 TimeManager controller) {
         super();
@@ -103,9 +100,51 @@ public class Card extends JPanel {
         this.deadline = deadline; // CAN BE NULL
         this.progress = progress;
         this.subCards = new ArrayList<>();
-        this.labels = labels;
         this.parentCard = parentCard;
         this.expanded = false;
+
+        this.f = new SimpleDateFormat("M/d @ h:mm a");
+        this.controller = controller;
+
+        // load GUI with data
+        loadGUI();
+
+        // listeners
+        addListeners();
+
+        this.setVisible(true);
+    }
+
+    public Card(Priority priority,
+                String title,
+                String description,
+                Date startDate,
+                Date deadline,
+                int progress,
+                ArrayList<Card> subCards,
+                TimeManager controller) {
+        super();
+
+        // GUI setup
+        ScrollBar s = new ScrollBar();
+        s.setPreferredSize(new Dimension(1, 1));
+        this.labelScrollPane.setHorizontalScrollBar(s);
+
+        // data init
+        this.priority = priority;
+        this.title = title;
+        this.description = description;
+        this.startDate = startDate;
+        this.deadline = deadline; // CAN BE NULL
+        this.progress = progress;
+        this.subCards = subCards;
+        this.expanded = true;
+
+        // init colors
+        Color c = Priority.priorityToColor(priority);
+        priorityLabelPanel.setBackground(c);
+        deadlineBar.setForeground(c);
+        progressBar.setForeground(c);
 
         this.f = new SimpleDateFormat("M/d @ h:mm a");
         this.controller = controller;
@@ -135,7 +174,6 @@ public class Card extends JPanel {
         this.deadline = null; // CAN BE NULL
         this.progress = 0;
         this.subCards = new ArrayList<>();
-        this.labels = new ArrayList<>();
         this.parentCard = null;
         this.expanded = true;
 
@@ -205,10 +243,6 @@ public class Card extends JPanel {
             subSubCards.addAll(subCards);
         }
         return subSubCards;
-    }
-
-    public ArrayList<CardLabel> getLabels() {
-        return labels;
     }
 
     public Card getParentCard() {
@@ -286,31 +320,8 @@ public class Card extends JPanel {
         updateExpand();
     }
 
-    public void setLabels(ArrayList<CardLabel> newLabels) {
-        labels = newLabels;
-    }
-
-    public void addLabel(CardLabel l) {
-        labels.add(l);
-        labelPanel.add(l);
-    }
-
-    public void removeLabel(CardLabel l) {
-        for (CardLabel label : labels) {
-            if (label.equals(l)) {
-                labels.remove(label);
-                break;
-            }
-        }
-        for (Component comp : labelPanel.getComponents()) {
-            if (comp instanceof CardLabel && comp.equals(l)) {
-                labelPanel.remove(comp);
-                break;
-            }
-        }
-    }
-
     public void setParentCard(Card newParentCard) {
+        updateParent();
         parentCard = newParentCard;
     }
 
@@ -328,6 +339,7 @@ public class Card extends JPanel {
         progressLabel.setText(progress + "%");
         updateProgressBar();
         updateExpand();
+        updateParent();
         mainPanel.revalidate();
         mainPanel.repaint();
     }
@@ -340,6 +352,14 @@ public class Card extends JPanel {
             expanded = !expanded;
             updateExpand();
         });
+    }
+
+    public void updateParent() {
+        if (parentCard != null) {
+            parentLabel.setText("Subcard of " + parentCard.getTitle());
+        } else {
+            parentLabel.setText("");
+        }
     }
 
     public void updateExpand() {

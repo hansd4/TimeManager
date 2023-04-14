@@ -18,6 +18,10 @@ public class CardList {
         return cards;
     }
 
+    public void setCards(ArrayList<Card> newCards) {
+        cards = newCards;
+    }
+
     public void removeCard(Card card) {
         cards.remove(card);
     }

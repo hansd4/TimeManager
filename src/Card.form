@@ -219,7 +219,18 @@
                               <preferredSize width="32767" height="18"/>
                             </properties>
                             <border type="none"/>
-                            <children/>
+                            <children>
+                              <component id="a1e08" class="javax.swing.JLabel" binding="parentLabel">
+                                <constraints/>
+                                <properties>
+                                  <background color="-16777216"/>
+                                  <font name="Roboto" size="10" style="0"/>
+                                  <foreground color="-1"/>
+                                  <horizontalTextPosition value="10"/>
+                                  <text value="Subcard of "/>
+                                </properties>
+                              </component>
+                            </children>
                           </grid>
                         </children>
                       </scrollpane>

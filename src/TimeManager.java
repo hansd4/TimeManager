@@ -1,12 +1,10 @@
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
+import java.io.File;
+import java.io.Serializable;
+import java.util.*;
 
-public class TimeManager {
+public class TimeManager implements Serializable {
     private MainFrame view;
     private CardList[] cardLists;
-    private ArrayList<CardLabel> labels;
 
     public TimeManager() {
         cardLists = new CardList[6];
@@ -16,13 +14,22 @@ public class TimeManager {
         cardLists[3] = new CardList("Later");
         cardLists[4] = new CardList("No due date");
         cardLists[5] = new CardList("Done");
-        labels = new ArrayList<>();
         view = new MainFrame(this);
+
+        // load data
+        if (new File("1.save").exists()) {
+            SaveFile file = (SaveFile) SaveManager.load("1.save");
+            // reload cards
+            ArrayList<CardModel> models = file.getCards();
+            for (CardModel m : models) {
+                backToCard(m);
+            }
+        }
 
         while (true) {
             try {
-                Thread.sleep(15000); // refresh GUI every 15 seconds
                 update();
+                Thread.sleep(15000); // refresh GUI every 15 seconds
             } catch (Exception ignored) {
 
             }
@@ -54,16 +61,8 @@ public class TimeManager {
         update();
     }
 
-    public CardLabel addLabel(CardLabel newLabel) {
-        labels.add(newLabel);
-        return newLabel;
-    }
-
-    public void removeLabel(CardLabel label) {
-        labels.remove(label);
-    }
-
     public void update() {
+        sortAllInList();
         for (CardList list : cardLists) {
             for (Card card : list.getCards()) {
                 System.out.println("Loading GUI of " + card);
@@ -73,13 +72,68 @@ public class TimeManager {
         view.displayCardLists();
     }
 
+    public void save() {
+        // gather all (top level) cards
+        ArrayList<Card> topLevelCards = new ArrayList<>();
+        for (CardList list : cardLists) {
+            for (Card card : list.getCards()) {
+                if (card.getParentCard() == null) {
+                    topLevelCards.add(card);
+                }
+            }
+        }
+        // convert all to cardModels
+        ArrayList<CardModel> cardModels = new ArrayList<>();
+        for (Card card : topLevelCards) {
+            cardModels.add(toCardModel(card));
+        }
+        // save to SaveFile
+        SaveFile s = new SaveFile(cardModels);
+        SaveManager.save(s, "1.save");
+    }
+
+    public void sortAllInList() {
+        for (int i = 0; i < 4; i++) {
+            List<Card> newList = cardLists[i].getCards();
+            newList.sort(new CardComparator());
+            // remove duplicates
+            for (int j = 0; j < newList.size() - 1; j++) {
+                Card c = newList.get(j);
+                for (int k = j + 1; k < newList.size(); k++) {
+                    Card otherCard = newList.get(k);
+                    if (c.equals(otherCard)) {
+                        newList.remove(k);
+                        k--;
+                    }
+                }
+            }
+            cardLists[i].setCards(new ArrayList<>(newList));
+        } // skip 4, no due dates
+        List<Card> newList = cardLists[5].getCards();
+        newList.sort(new CardComparator());
+        for (int j = 0; j < newList.size() - 1; j++) {
+            Card c = newList.get(j);
+            for (int k = j + 1; k < newList.size(); k++) {
+                Card otherCard = newList.get(k);
+                if (c.equals(otherCard)) {
+                    newList.remove(k);
+                    k--;
+                }
+            }
+        }
+        cardLists[5].setCards(new ArrayList<>(newList));
+    }
+
+    static class CardComparator implements Comparator<Card> {
+        @Override
+        public int compare(Card card1, Card card2) {
+            return Long.compare(card1.getDeadline().getTime(), card2.getDeadline().getTime());
+        }
+    }
+
     public CardList[] getCardLists() {
         sortCards();
         return cardLists;
-    }
-
-    public ArrayList<CardLabel> getLabels() {
-        return labels;
     }
 
     public ArrayList<Card> getCardsBesides(Card card) {
@@ -134,25 +188,35 @@ public class TimeManager {
         return result;
     }
 
-    public CardLabel getLabelAsGUI(CardLabel c) {
-        for (CardLabel label : labels) {
-            if (c.equals(label)) {
-                return label.clone();
-            }
-        }
-        return c;
+    public static CardModel toCardModel(Card c) {
+        return new CardModel(c.getPriority(),
+                c.getTitle(),
+                c.getDescription(),
+                c.getStartDate(),
+                c.getDeadline(),
+                c.getProgress(),
+                c.getSubCards(),
+                c.getParentCard(),
+                c.isExpanded());
     }
 
-    public boolean validLabel(CardLabel c) {
-        for (CardLabel label : labels) {
-            System.out.println("Checking label " + label + " in master list. ");
-            if (c.equals(label)) {
-                System.out.println(c + " matches " + label + ". " + c + " is a valid Label.");
-                return true;
+    private Card backToCard(CardModel m) {
+        ArrayList<Card> subCards = new ArrayList<>();
+        if (m.getSubCardsModel() != null && m.getSubCardsModel().size() > 0) {
+            for (CardModel sub : m.getSubCardsModel()) {
+                subCards.add(backToCard(sub));
             }
         }
-        System.out.println(c + " does not match with any labels in master list. " + c + " is NOT a valid label.");
-        return false;
+        Card newCard = new Card(m.getPriority(),
+                m.getTitle(),
+                m.getDescription(),
+                m.getStartDate(),
+                m.getDeadline(),
+                m.getProgress(),
+                subCards,
+                this);
+        cardLists[4].getCards().add(newCard);
+        return newCard;
     }
 
     private void sortCards() { // sorts all cards into their respective lists based on deadline and completion status
